@@ -11,7 +11,6 @@ const APIFeatures = require("./../utils/apiFeatures");
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   let doc = new APIFeatures(
-    userModel.find({ isActive: { $ne: false } }),
     req.query
   )
     .filter()
@@ -27,54 +26,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   return res.status(200).json(new Response("success", doc));
 });
 
-exports.addCourse = catchAsync(async (req, res, next) => {
-  const found = await userModel.findById(req.user.id);
-  if (!found) {
-    return next(new AppError("Document not found matching this id!", 404));
-  }
 
-  /** PAYMENT GATEWAY INTEGRATION */
-
-  if (!found.courses.includes(req.body.courseId)) {
-    // console.log(found);
-    found.courses.push(req.body.courseId);
-
-    // console.log(found);
-    await found.save({ validateBeforeSave: false });
-    const course = await courseModel.findById(req.body.courseId);
-    await invoiceModel.create({
-      courseId: req.body.courseId,
-      user: found._id,
-      price: course.price,
-      courseName: course.name,
-      pinCode: new Date().getTime().toString(),
-    });
-    // await new Email(found).addCourse(req.body.courseId);
-  }
-  return res.status(200).json(new Response("success", found));
-});
-
-exports.withdrawCourse = catchAsync(async (req, res, next) => {
-  const found = await userModel.findByIdAndUpdate(
-    req.user.id,
-    {
-      $pull: {
-        courses: req.body.courseId,
-      },
-    },
-    {
-      new: true,
-    }
-  );
-  if (!found) {
-    return next(new AppError("User not found matching this id!", 404));
-  }
-  await courseProgressModel.deleteOne({
-    userId: req.user.id,
-    courseId: req.body.courseId,
-  });
-  return res.status(200).json(new Response("success", found));
-});
 
 
 

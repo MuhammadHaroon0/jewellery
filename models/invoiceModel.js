@@ -11,7 +11,6 @@ const invoiceSchema = new mongoose.Schema({
   userEmail: {
     type: String,
     required: [true, "email is required"],
-    unique: true,
     minLength: 7,
     maxLength: 50,
     validate: [validator.isEmail, "Email should be valid"],
@@ -24,6 +23,7 @@ const invoiceSchema = new mongoose.Schema({
   },
   pinCode: {
     type: String,
+
   },
 });
 

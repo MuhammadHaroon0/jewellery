@@ -13,6 +13,10 @@ const ratingSchema = new mongoose.Schema({
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: "User",
   // },
+  userName: {
+    type: String,
+
+  },
   jewellry: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Jewellry",

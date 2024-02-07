@@ -4,20 +4,21 @@ const {
   getAll,
   getOne,
   updateOne,
+  deleteOne,
+  createOne,
 } = require("../controllers/handlerFactory");
 
 const { setModel } = require('./../models/setModel');
 
-const { addSet, deleteSet } = require("../controllers/setController");
 
 const { protect, restriction } = require("../controllers/authController");
 
-router.route("/").get(getAll(setModel)).post(protect, restriction("admin"), addSet);
+router.route("/").get(getAll(setModel)).post(protect, restriction("admin"), createOne(setModel));
 
 router
   .route("/:id")
-  .get(getOne(setModel))
+  .get(getOne(setModel, "items"))
   .put(protect, restriction("admin"), updateOne(setModel))
-  .delete(protect, restriction("admin"), deleteSet);
+  .delete(protect, restriction("admin"), deleteOne(setModel));
 
 module.exports = router;

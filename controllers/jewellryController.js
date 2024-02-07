@@ -27,7 +27,7 @@ exports.deletejewellry = catchAsync(async (req, res, next) => {
   return res.status(204).json(new Response("success", found));
 });
 
-exports.getTop10jewellrys = catchAsync(async (req, res, next) => {
+exports.getTop5jewellrys = catchAsync(async (req, res, next) => {
   //ratings is virtual array in jewellrys and it contains objects which have rating atribute
 
   const top = await jewellryModel.aggregate([
@@ -56,7 +56,7 @@ exports.getTop10jewellrys = catchAsync(async (req, res, next) => {
         averageRating: -1,
       },
     },
-    { $limit: 10 },
+    { $limit: 5 },
     {
       $replaceRoot: { newRoot: "$jewellry" },
     },
@@ -64,5 +64,6 @@ exports.getTop10jewellrys = catchAsync(async (req, res, next) => {
   if (!top) {
     return next(new AppError("Document not found matching this id!", 404));
   }
+
   return res.status(200).json(new Response("success", top));
 });

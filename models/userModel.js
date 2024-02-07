@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
   accountType: {
     type: String,
     default: "admin",
+    unique: true,
   },
   image: {
     type: String,

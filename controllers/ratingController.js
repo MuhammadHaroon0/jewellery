@@ -13,16 +13,12 @@ exports.getjewellryRatings = catchAsync(async (req, res, next) => {
 });
 
 exports.addjewellryRatings = catchAsync(async (req, res, next) => {
-  let found = await ratingModel.find({
-    jewellry: req.body.jewellry,
-    user: req.body.name,
-  });
-
 
   found = await ratingModel.create({
     rating: req.body.rating,
     jewellry: req.body.jewellry,
     review: req.body.review,
+    userName: req.body.userName
   });
   return res.status(200).json(new Response("success", found));
 });

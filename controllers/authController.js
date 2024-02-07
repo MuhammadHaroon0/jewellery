@@ -1,5 +1,5 @@
 const userModel = require("../models/userModel");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("../utils/AppError");
@@ -20,11 +20,15 @@ function signToken(id, res) {
   // {
   //   cookieOptions.secure=true
   // }
-  res.cookie("jwt", token, cookieOptions);
+  // res.cookie("jwt", token, cookieOptions);
   return token;
 }
 
 exports.signUp = catchAsync(async (req, res, next) => {
+  const count = await userModel.countDocuments()
+  console.log(count);
+  if (count)
+    return next(new AppError("Cannot create another user", 403))
   const newUser = await userModel.create(req.body);
   const token = signToken(newUser._id, res);
 
@@ -84,13 +88,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (found.checkPasswordchanged(decoded.iat))
     return next(new AppError("User changed the password!", 401));
 
-  if (!found.active)
-    return next(
-      new AppError(
-        "User no longer exists! Login to activate your account again",
-        403
-      )
-    );
+
 
   req.user = found;
   // console.log(token);

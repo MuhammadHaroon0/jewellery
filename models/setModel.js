@@ -6,12 +6,18 @@ const setSchema = new mongoose.Schema({
     required: [true, "name is required"],
     minLength: 4,
   },
-  items: [
-    {
+  items: {
+    type: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Jewellry",
-    },
-  ],
+    }],
+    validate: {
+      validator: function (arr) {
+        return arr.length >= 2;
+      },
+      message: props => `The 'items' array must contain at least two elements.`
+    }
+  }
 });
 
 //To provide efficient searching of mongodb
