@@ -13,7 +13,7 @@ const invoiceSchema = new mongoose.Schema({
     required: [true, "email is required"],
     minLength: 7,
     maxLength: 50,
-    validate: [validator.isEmail, "Email should be valid"],
+    // validate: [validator.isEmail, "Email should be valid"],
   },
   address: {
     type: String,
@@ -25,8 +25,11 @@ const invoiceSchema = new mongoose.Schema({
   },
   jewellryId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, "jewellryID is required"],
     ref: "jewellry",
+  },
+  setId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "set",
   },
   pinCode: {
     type: String,
