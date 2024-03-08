@@ -12,6 +12,13 @@ exports.createOne = catchAsync(async (req, res, next) => {
     const doc = await invoiceModel.create(req.body);
     return res.status(201).json(new Response("success", doc));
 });
+exports.incompletedOrders = catchAsync(async (req, res, next) => {
+    const doc = await invoiceModel.find({ isCompleted: false })
+    return res.status(200).json(new Response("success", doc));
+})
+exports.markAsCompleted = catchAsync(async (req, res, next) => {
+    const doc = await invoiceModel.findByIdAndUpdate(req.params.id, { isCompleted: true }, { new: true })
+    return res.status(200).json(new Response("success", doc));
+})
 
 
-// Usage

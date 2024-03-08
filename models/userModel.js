@@ -36,25 +36,10 @@ const userSchema = new mongoose.Schema({
         "Password must contain at least one letter, one number, and one special character.",
     },
   },
-  confirmPassword: {
-    type: String,
-    required: [true, "password is required"],
-    select: false,
-    validate: {
-      validator: function (val) {
-        return this.password === val;
-      },
-      message: "Passwords are not same",
-    },
-  },
+
   accountType: {
     type: String,
     default: "admin",
-    unique: true,
-  },
-  image: {
-    type: String,
-    default: "defaultimg.jpg",
   },
   passwordResetToken: String,
   passwordResetTokenExpires: Date,
@@ -97,41 +82,6 @@ userSchema.methods.getPasswordResetToken = function () {
   return resetToken;
 };
 
-//To provide efficient searching of mongodb
-// userSchema.index({ SOMETHING : 1, SOMETHING: -1 }); //1 for ascending -1 for descending
 
-//Document middlewares,can work before or after save or create
-// Pre Save Hook
-// userSchema.pre('save',function(next){
-//     //query middleware
-//     next()
-// })
-
-// userSchema.pre(/^find/,function(next){
-//     //query middleware
-//     next()
-// })
-
-//Post Save Hook
-//The save hook doenst works for findAndUpdate and insertMany etc
-// tourSchema.post('save', function (doc, next) {
-//   next();
-// });
-
-//? Aggeregation Middleware, works before or after aggregation function
-// tourSchema.pre('aggregate', function (next) {
-//   this.pipeline().unshift({ $match: {  } });
-//   next();
-// });
-
-// userSchema.methods.FUNCTIONNAME=function()
-// {
-//     //member functions
-// }
-
-//usually for child-parent referencing
-// userSchema.virtual('',{
-//
-// })
 
 module.exports = mongoose.model("User", userSchema);

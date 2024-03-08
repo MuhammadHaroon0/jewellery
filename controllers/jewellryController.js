@@ -4,6 +4,8 @@ const { setModel } = require("../models/setModel");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const Response = require("../utils/serverResponse");
+const upload = require("../utils/multerConfig");
+const sharp = require("sharp");
 
 exports.deletejewellry = catchAsync(async (req, res, next) => {
   const jewellryId = req.params.id;
@@ -58,4 +60,16 @@ exports.getTop5jewellrys = catchAsync(async (req, res, next) => {
   }
 
   return res.status(200).json(new Response("success", top));
+});
+
+exports.uploadImage = upload.single("image");
+
+exports.resizeImage = catchAsync(async (req, res, next) => {
+  if (!req.file) return next();
+  req.file.buffer = await sharp(req.file.buffer)
+    .resize(1200, 630)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toBuffer();
+  next();
 });
