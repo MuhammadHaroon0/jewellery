@@ -17,14 +17,7 @@ const {
   restriction,
 } = require("../controllers/authController");
 
-const {
-  getAllUsers,
 
-  updateMe,
-  uploadUserImage,
-  resizeUserImage,
-
-} = require("../controllers/userController");
 
 const userModel = require("../models/userModel");
 
@@ -35,11 +28,7 @@ router.patch("/resetPassword/:resetToken", resetPassword);
 router.patch("/updatePassword", protect, updatePassword);
 
 router.use(protect)
-router
-  .route("/")
-  .get(restriction("admin"), getAllUsers)
-  .post(restriction("admin"), createOne(userModel))
-  .patch(uploadUserImage, resizeUserImage, updateMe);
+
 
 router
   .route("/:id")

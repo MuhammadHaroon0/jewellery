@@ -10,7 +10,6 @@ function generatePinCode(length) {
 exports.createOne = catchAsync(async (req, res, next) => {
     req.body.pinCode = generatePinCode(6); // Generate a 6-digit pin code
     const doc = await invoiceModel.create(req.body);
-    console.log(doc);
     return res.status(201).json(new Response("success", doc));
 });
 

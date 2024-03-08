@@ -12,9 +12,10 @@ const { setModel } = require('./../models/setModel');
 
 
 const { protect, restriction } = require("../controllers/authController");
+const { showSetsContainingSpecificJewllery } = require("../controllers/setController");
 
 router.route("/").get(getAll(setModel)).post(protect, restriction("admin"), createOne(setModel));
-
+router.route("/setsSpecificJewllery").get(showSetsContainingSpecificJewllery)
 router
   .route("/:id")
   .get(getOne(setModel, "items"))

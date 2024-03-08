@@ -57,11 +57,11 @@ const ratingRouter = require("./routes/ratingRoutes.js");
 const setRouter = require("./routes/setRoutes.js");
 
 //ROUTES
-app.use("/api/ver1/users", userRouter);
-app.use("/api/ver1/jewellry", jewellryRouter);
-app.use("/api/ver1/invoices", invoiceRouter);
-app.use("/api/ver1/ratings", ratingRouter);
-app.use("/api/ver1/sets", setRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/jewellry", jewellryRouter);
+app.use("/api/v1/invoices", invoiceRouter);
+app.use("/api/v1/ratings", ratingRouter);
+app.use("/api/v1/sets", setRouter);
 
 //PREVENTING REACHING UNDEFINED ROUTES
 app.all("*", (req, res, next) => {

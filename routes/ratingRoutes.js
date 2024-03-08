@@ -5,6 +5,7 @@ const {
   getOne,
   updateOne,
   deleteOne,
+  createOne,
 } = require("../controllers/handlerFactory");
 
 const { ratingModel } = require("../models/ratingModel");
@@ -19,7 +20,7 @@ const { protect, restriction } = require("../controllers/authController");
 router
   .route("/")
   .get(getAll(ratingModel))
-  .post(addjewellryRatings);
+  .post(createOne(ratingModel));
 
 router.route("/getjewellryRatings/:jewellryId").get(getjewellryRatings);
 

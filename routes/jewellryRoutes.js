@@ -10,7 +10,6 @@ const {
 const { jewellryModel } = require("../models/jewellryModel");
 
 const {
-  getAlljewellryData,
   getTop5jewellrys,
   deletejewellry,
 } = require("../controllers/jewellryController");
@@ -21,7 +20,6 @@ router
   .route("/")
   .get(getAll(jewellryModel))
   .post(protect, restriction("admin"), createOne(jewellryModel));
-router.route("/alljewellryData/:id").get(getAlljewellryData);
 router.route("/getTop5jewellries").get(getTop5jewellrys);
 
 //
@@ -29,6 +27,6 @@ router
   .route("/:id")
   .put(protect, restriction("admin"), updateOne(jewellryModel))
   .delete(protect, restriction("admin"), deletejewellry)
-  .get(getOne(jewellryModel))
+  .get(getOne(jewellryModel, "ratings"))
 
 module.exports = router;
