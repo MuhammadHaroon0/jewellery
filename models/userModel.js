@@ -5,12 +5,7 @@ const crypto = require("crypto");
 const saltRounds = 12;
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "name is required"],
-    minLength: 4,
-    maxLength: 30,
-  },
+
   email: {
     type: String,
     required: [true, "email is required"],
@@ -39,7 +34,9 @@ const userSchema = new mongoose.Schema({
 
   accountType: {
     type: String,
-    default: "admin",
+    enum: ["admin", "non-admin"],
+    default: "non-admin",
+    unique: true
   },
   passwordResetToken: String,
   passwordResetTokenExpires: Date,

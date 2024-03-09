@@ -12,9 +12,13 @@ const invoiceModel = require('./../models/invoiceModel');
 const { protect, restriction } = require("../controllers/authController");
 const { createOne, incompletedOrders, markAsCompleted } = require("../controllers/invoiceController");
 
-router.route("/").get(protect, restriction("admin"), getAll(invoiceModel)).post(createOne);
-router.route("/incompletedOrders").get(protect, restriction("admin"), incompletedOrders);
-router.route("/markAsCompleted/:id").post(protect, restriction("admin"), markAsCompleted);
+router.route("/")
+  .get(protect, restriction("admin"), getAll(invoiceModel))
+  .post(protect, restriction("admin"), createOne);
+router.route("/incompletedOrders")
+  .get(protect, restriction("admin"), incompletedOrders);
+router.route("/markAsCompleted/:id")
+  .post(protect, restriction("admin"), markAsCompleted);
 
 router
   .route("/:id")
