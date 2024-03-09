@@ -18,7 +18,7 @@ router.route("/")
 router.route("/incompletedOrders")
   .get(protect, restriction("admin"), incompletedOrders);
 router.route("/markAsCompleted/:id")
-  .post(protect, restriction("admin"), markAsCompleted);
+  .patch(protect, restriction("admin"), markAsCompleted);
 
 router
   .route("/:id")

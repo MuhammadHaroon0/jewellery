@@ -17,7 +17,7 @@ const {
 } = require("../controllers/jewellryController");
 
 const { protect, restriction } = require("../controllers/authController");
-const { uploadToCloudinary } = require("../utils/cloudinary");
+const { uploadToCloudinary, deleteFromCloudinary } = require("../utils/cloudinary");
 
 router
   .route("/")
@@ -29,7 +29,7 @@ router.route("/getTop5jewellries").get(getTop5jewellrys);
 router
   .route("/:id")
   .get(getOne(jewellryModel, "ratings"))
-  .put(protect, restriction("admin"), uploadImage, resizeImage, uploadToCloudinary, updateOne(jewellryModel))
-  .delete(protect, restriction("admin"), deletejewellry)
+  .put(protect, restriction("admin"), uploadImage, resizeImage, uploadToCloudinary, deleteFromCloudinary, updateOne(jewellryModel))
+  .delete(protect, restriction("admin"), deleteFromCloudinary, deletejewellry)
 
 module.exports = router;

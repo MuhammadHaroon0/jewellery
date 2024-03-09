@@ -21,7 +21,7 @@ const {
 
 const userModel = require("../models/userModel");
 
-// router.post("/signup", signUp);
+router.post("/signup", signUp);
 router.post("/login", login);
 // router.post("/forgotPassword", forgotPassword);
 // router.patch("/resetPassword/:resetToken", resetPassword);

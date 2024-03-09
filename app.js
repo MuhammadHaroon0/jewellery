@@ -12,11 +12,13 @@ const hpp = require("hpp");
 ///////////////////////////Files
 const AppError = require("./utils/AppError");
 
-app.use(express.static(__dirname + "public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // Replace with your frontend's URL
+  credentials: true, // This allows cookies to be sent in CORS requests
+}));
 app.use(helmet());
 app.use(morgan("tiny"));
 

@@ -8,14 +8,14 @@ const upload = require("../utils/multerConfig");
 const sharp = require("sharp");
 
 exports.deletejewellry = catchAsync(async (req, res, next) => {
-  const jewellryId = req.params.id;
+  const jewellryId = req.params.id
   const found = await jewellryModel.findById(jewellryId);
   if (!found) {
     return next(new AppError("Document not found matching this id!", 404));
   }
 
   await jewellryModel.findByIdAndDelete(jewellryId);
-  await ratingModel.deleteMany({ jewellry: jewellryId });
+  // await ratingModel.deleteMany({ jewellry: jewellryId });
   await setModel.updateMany({ items: jewellryId }, { $pull: { items: jewellryId } }, { new: true });
 
   return res.status(204).json(new Response("success", found));

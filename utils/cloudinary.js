@@ -23,6 +23,9 @@ exports.uploadToCloudinary = catchAsync(async (req, res, next) => {
     });
 
     req.body.image = uploadResult.secure_url
+    next()
+});
+exports.deleteFromCloudinary = catchAsync(async (req, res, next) => {
     const jewellry = await jewellryModel.findById(req.params.id)
     let filename
     if (jewellry) {
@@ -39,32 +42,7 @@ exports.uploadToCloudinary = catchAsync(async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
-
     next()
-});
+})
 
-
-exports.postUploadToCloudinary = catchAsync(async (req, res, next) => {
-    if (!req.file) return next();
-    const uploadResult = await new Promise((resolve) => {
-        cloudinary.uploader.upload_stream((error, uploadResult) => {
-            if (error) {
-                return next(new AppError("Internal server error", 500))
-            }
-
-            return resolve(uploadResult);
-        }).end(req.body.image);
-    });
-
-
-    try {
-        req.body.image = uploadResult.secure_url
-        // console.log(result);
-    } catch (error) {
-        console.log(error);
-        return next(new AppError("Internal server error", 500))
-    }
-
-    next()
-});
 

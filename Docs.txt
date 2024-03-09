@@ -1,0 +1,57 @@
+BASE_URL = http://localhost:5000/api/v1
+replace 'http://localhost:5000' with backend url when deployed
+
+USER ROUTES:
+/users/login METHOD:POST,to login user
+/users/updatePassword METHOD:PATCH,to update password
+
+JEWELLRY ROUTES:
+/jewellry METHOD:GET,to get all the jewlleries
+/jewellry METHOD:POST,to create new jewlleries,here admin can add images of jewellry too
+/jewellry/getTop5jewellries METHOD:GET,to get top 5 jewlleries based on avg rating
+/jewellry/:id METHOD:GET,to get single jewllery 
+/jewellry/:id METHOD:PUT,to update single jewllery,here admin can add images of jewellry too
+/jewellry/:id METHOD:DELETE,to delete single jewllery 
+
+INVOICE ROUTES:
+/invoices METHOD:GET,to get all the invoices
+/invoices METHOD:POST,to create new invoice
+/invoices/incompletedOrders METHOD:GET,to get incompleted orders
+/invoices/markAsCompleted/:id METHOD:PATCH,to mark order as completed
+/invoices/:id METHOD:GET,to get single invoice 
+/invoices/:id METHOD:PUT,to update single invoice
+/invoices/:id METHOD:DELETE,to delete single invoice 
+
+SET ROUTES:
+/sets METHOD:GET,to get all the sets
+/sets METHOD:POST,to create new set
+/sets/setsSpecificJewllery METHOD:POST,to show set containing a particular jewellery
+/sets/:id METHOD:GET,to get single set
+/sets/:id METHOD:PUT,to update single set
+/sets/:id METHOD:DELETE,to delete single set 
+
+RATING ROUTES: 
+/ratings/ METHOD:GET,to get all the ratings
+/ratings/ METHOD:POST,to create new rating
+/ratings/getjewellryRatings/:jewellryId METHOD:GET,to get specific jewllery rating
+/ratings/:id METHOD:GET,to get single rating
+/ratings/:id METHOD:PUT,to update single rating
+/ratings/:id METHOD:DELETE,to delete single rating 
+
+ENVIRONMENT VARIABLES:
+BACKEND_PORT=5000
+DB=
+NODE_ENV=development
+JWT_SECRET=STUDYSMARTSUCCESS
+JWT_EXPIRY=90d
+JWT_COOKIE_EXPIRY=90
+MAIL_SERVICE=gmail
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=
+MAIL_USER=
+MAIL_PASS=
+MAIL_SENDER=
+FRONTEND_URL=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_API_KEY=
+CLOUDINARY_CLOUD_NAME=

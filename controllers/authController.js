@@ -106,59 +106,59 @@ exports.restriction = (...accountType) => {
   };
 };
 
-exports.forgotPassword = catchAsync(async (req, res, next) => {
-  if (!req.body.email)
-    return next(new AppError("Please provide an email!", 404));
+// exports.forgotPassword = catchAsync(async (req, res, next) => {
+//   if (!req.body.email)
+//     return next(new AppError("Please provide an email!", 404));
 
-  const found = await userModel
-    .findOne({ email: req.body.email })
-    .select("+email");
-  if (!found) return next(new AppError("Please provide a valid email!", 404));
+//   const found = await userModel
+//     .findOne({ email: req.body.email })
+//     .select("+email");
+//   if (!found) return next(new AppError("Please provide a valid email!", 404));
 
-  const resetToken = found.getPasswordResetToken();
-  try {
-    // const url = `${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
-    // await new Email(found).sendResetPassword(url);
-    await found.save({ validateBeforeSave: false });
-    res.status(200).json({
-      status: "success",
-      message: "Password reset token sent",
-    });
-  } catch (error) {
-    found.passwordResetToken = undefined;
-    found.passwordResetTokenExpires = undefined;
-    await found.save({ validateBeforeSave: false });
-    next(
-      new AppError("Email not sent for password reset!Try again later", 500)
-    );
-  }
-});
+//   const resetToken = found.getPasswordResetToken();
+//   try {
+//     // const url = `${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
+//     // await new Email(found).sendResetPassword(url);
+//     await found.save({ validateBeforeSave: false });
+//     res.status(200).json({
+//       status: "success",
+//       message: "Password reset token sent",
+//     });
+//   } catch (error) {
+//     found.passwordResetToken = undefined;
+//     found.passwordResetTokenExpires = undefined;
+//     await found.save({ validateBeforeSave: false });
+//     next(
+//       new AppError("Email not sent for password reset!Try again later", 500)
+//     );
+//   }
+// });
 
-exports.resetPassword = catchAsync(async (req, res, next) => {
-  //on clicking the button in frontend patch the request to this route
-  const resetToken = crypto
-    .createHash("sha256")
-    .update(req.params.resetToken)
-    .digest("hex");
-  const found = await userModel.findOne({
-    passwordResetToken: resetToken,
-    passwordResetTokenExpires: { $gt: Date.now() },
-  });
-  if (!found) return next(new AppError("Token is invalid or expired!", 400));
+// exports.resetPassword = catchAsync(async (req, res, next) => {
+//   //on clicking the button in frontend patch the request to this route
+//   const resetToken = crypto
+//     .createHash("sha256")
+//     .update(req.params.resetToken)
+//     .digest("hex");
+//   const found = await userModel.findOne({
+//     passwordResetToken: resetToken,
+//     passwordResetTokenExpires: { $gt: Date.now() },
+//   });
+//   if (!found) return next(new AppError("Token is invalid or expired!", 400));
 
-  found.password = req.body.password;
-  found.confirmPassword = req.body.confirmPassword;
-  found.passwordResetToken = undefined;
-  found.passwordResetTokenExpires = undefined;
+//   found.password = req.body.password;
+//   found.confirmPassword = req.body.confirmPassword;
+//   found.passwordResetToken = undefined;
+//   found.passwordResetTokenExpires = undefined;
 
-  // console.log(req.body);
-  await found.save();
-  const token = signToken(found._id, res);
-  res.status(200).json({
-    status: "success",
-    token: token,
-  });
-});
+//   // console.log(req.body);
+//   await found.save();
+//   const token = signToken(found._id, res);
+//   res.status(200).json({
+//     status: "success",
+//     token: token,
+//   });
+// });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!req.body.oldPassword)
